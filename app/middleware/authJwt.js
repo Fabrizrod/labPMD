@@ -12,7 +12,7 @@ const verifyToken = (req, res, next) => {
     if (err) {
       return res.status(401).send({ message: "¡No autorizado!" });
     }
-    req.userId = decoded.id; // Guardamos el ID para usarlo luego
+    req.userId = decoded.id; 
     next();
   });
 };

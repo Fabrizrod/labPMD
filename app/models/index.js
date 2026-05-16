@@ -1,18 +1,32 @@
-import dbConfig from "../config/db.config.js";
 import Sequelize from "sequelize";
+import dotenv from "dotenv";
+dotenv.config();
+
 import { UserModel } from "./user.model.js";
 import { RoleModel } from "./role.model.js";
 
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
-  pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
+// Conexión directa a la nube usando process.env
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 3306,
+    dialect: "mysql",
+    dialectOptions: {
+      ssl: {
+        rejectUnauthorized: false
+      }
+    },
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
   }
-});
+);
 
 const db = {};
 
