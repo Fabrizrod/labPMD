@@ -7,7 +7,10 @@ import userRoutes from "./app/routes/user.routes.js";
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:5173"
+  origin: [
+    "http://localhost:5173", 
+    "https://labpmd-1.onrender.com"
+  ]
 };
 
 app.use(cors(corsOptions));
